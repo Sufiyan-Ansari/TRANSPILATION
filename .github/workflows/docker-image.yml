@@ -15,4 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag TRANSPILATION:$(date +%s)
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Pushing Docker images to docker hub
+      run : docker push ${{ secrets.DOCKERHUB_USERNAME }}/TRANSPILATION:$(date +%s)
+      
+
