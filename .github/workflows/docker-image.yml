@@ -26,5 +26,17 @@ jobs:
 
     - name: Pushing Docker images to docker hub
       run : docker push ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:latest
+
+
+    - name: Install Trivy
+      run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.66.0/trivy_0.66.0_Linux-64bit.tar.gz
+          tar zxvf trivy_0.66.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+          
+    - name: Scan Docker Image with Trivy
+      run: |
+          trivy image --severity HIGH,CRITICAL ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:latest
+          
       
 
