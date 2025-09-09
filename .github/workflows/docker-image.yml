@@ -31,7 +31,7 @@ jobs:
     - name: Run Trivy vulnerability scanner (HTML)
       uses: aquasecurity/trivy-action@0.24.0
       with:
-         image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/my-ts-app:${{ github.sha }}
+         image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:latest
          format: 'template'
          template: '@/contrib/html.tpl'
          output: 'trivy-report.html'
