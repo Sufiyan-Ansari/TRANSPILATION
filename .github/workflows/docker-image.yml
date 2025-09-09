@@ -14,13 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Printing image name
+      run: 
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:$(date +%s)
+      run: docker build -t ${{ secrets.DOCKERHUB_TOKEN }}/transpilation:latest .
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
     - name: Pushing Docker images to docker hub
-      run : docker push ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:$(date +%s)
+      run : docker push ${{ secrets.DOCKERHUB_TOKEN }}/transpilation:latest
       
 
