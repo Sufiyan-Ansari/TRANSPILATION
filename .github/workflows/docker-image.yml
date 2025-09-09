@@ -28,18 +28,19 @@ jobs:
       run : docker push ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:latest
 
 
-    - name: Run Trivy vulnerability scanner
+    - name: Run Trivy vulnerability scanner (HTML)
       uses: aquasecurity/trivy-action@0.24.0
       with:
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/transpilation:latest
-          format: 'table'
-          output: 'trivy-report.txt'
+         image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/my-ts-app:${{ github.sha }}
+         format: 'template'
+         template: '@/contrib/html.tpl'
+         output: 'trivy-report.html'
 
-    - name: Upload Trivy report as artifact
+    - name: Upload Trivy HTML report
       uses: actions/upload-artifact@v4
       with:
-         name: trivy-report
-         path: trivy-report.txt
+        name: trivy-html-report
+        path: trivy-report.html
 
 
 #    - name: Install Trivy
